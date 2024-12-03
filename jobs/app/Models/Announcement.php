@@ -22,6 +22,6 @@ class Announcement extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Categorie::class, 'job_category');
+        return $this->belongsToMany(Categorie::class, 'announcement_category');
     }
 }
