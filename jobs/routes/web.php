@@ -1,6 +1,12 @@
 <?php
 
+use App\Http\Controllers\About\AboutController;
+use App\Http\Controllers\Announcements\AnnouncementsController;
+use App\Http\Controllers\Banner\BannerController;
+use App\Http\Controllers\Contact\ContactController;
+use App\Http\Controllers\Faq\FaqController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Services\ServicesController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -14,9 +20,13 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [AnnouncementsController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/services', [ServicesController::class, 'index'])->name('services.index');
+Route::get('/banner', [BannerController::class, 'index'])->name('banners.index');
+Route::get('/faq', [FaqController::class, 'index'])->name('faqs.index');
+Route::get('/about', [AboutController::class, 'index'])->name('about.index');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -24,4 +34,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
