@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,6 +25,8 @@ class AnnouncementFactory extends Factory
             'salary' => fake()->randomElement(['5000₾', '1000₾', '1300₾', '2200₾', '750₾', '2300₾', '1900₾']),
             'employment_type' => fake()->randomElement(['full-time', 'part-time', 'hybrid']),
             'author_id' => User::factory(),
+            'company_id' => Company::factory(),
+            'end_date' => fake()->dateTime()->format('Y-m-d H:i:s'),
             'status' => fake()->randomElement(['active', 'closed']),
         ];
     }

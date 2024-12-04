@@ -10,7 +10,7 @@ class AnnouncementsController extends Controller
 {
     public function index()
     {
-        $anouncements = Announcement::query()->with('categories')->latest()->paginate(10);
+        $anouncements = Announcement::query()->with(['categories', 'company'])->latest()->paginate(10);
 
         return inertia('Dashboard', compact('anouncements'));
     }

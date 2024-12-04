@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->string('employment_type');
             $table->foreignIdFor(User::class, 'author_id');
             $table->string('status');
+            $table->timestamp('end_date')->nullable();
             $table->timestamps();
         });
     }
