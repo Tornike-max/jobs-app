@@ -1,11 +1,10 @@
+import FilterAnnouncements from "@/Components/FilterAnnouncements";
 import JobsTable from "@/Components/JobsTable";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
-import { Head, Link } from "@inertiajs/react";
-import { FaStar } from "react-icons/fa";
-import { FaRegStar } from "react-icons/fa";
+import { Head } from "@inertiajs/react";
 
-export default function Dashboard({ auth, anouncements }: PageProps) {
+export default function Dashboard({ auth, anouncements, regions }: PageProps) {
     console.log(anouncements);
     return (
         <AuthenticatedLayout
@@ -20,6 +19,7 @@ export default function Dashboard({ auth, anouncements }: PageProps) {
             <div className="py-12">
                 <div className="mx-auto w-full ">
                     <div className="p-6 text-gray-900">
+                        <FilterAnnouncements regions={regions} />
                         <JobsTable jobs={anouncements} />
                     </div>
                 </div>

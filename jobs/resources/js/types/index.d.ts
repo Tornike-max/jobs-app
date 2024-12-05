@@ -5,8 +5,24 @@ export interface User {
     email_verified_at?: string;
 }
 
+export interface City {
+    id: number;
+    name: string;
+    region_id: number;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface Region {
+    id: number;
+    region: string;
+    created_at: string;
+    updated_at: string;
+    cities: City[];
+}
+
 export type PageProps<
-    T extends Record<string, unknown> = Record<string, unknown>,
+    T extends Record<string, unknown> = Record<string, unknown>
 > = T & {
     auth: {
         user: User;

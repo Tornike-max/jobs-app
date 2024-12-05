@@ -21,13 +21,18 @@ class Announcement extends Model
         'status'
     ];
 
-    public function categories()
+    public function category()
     {
-        return $this->belongsToMany(Categorie::class, 'announcement_category');
+        return $this->belongsTo(Category::class);
     }
 
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
     }
 }

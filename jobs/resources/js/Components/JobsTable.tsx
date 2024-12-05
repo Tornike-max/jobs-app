@@ -6,7 +6,6 @@ import { FaStar } from "react-icons/fa";
 
 const JobsTable = ({ jobs }: { jobs: any }) => {
     const [favorite, setFavorite] = useState(false);
-    console.log(jobs);
     const toggleFavorite = () => {
         setFavorite((fav) => !fav);
     };
@@ -35,6 +34,7 @@ const JobsTable = ({ jobs }: { jobs: any }) => {
                     <tbody>
                         {jobs.data.map(
                             (job: {
+                                id: number;
                                 title: string;
                                 company: {
                                     logo: string | undefined;
@@ -43,7 +43,10 @@ const JobsTable = ({ jobs }: { jobs: any }) => {
                                 created_at: string;
                                 end_date: string;
                             }) => (
-                                <tr className="text-blue-500 hover:bg-gray-50">
+                                <tr
+                                    key={job.id}
+                                    className="text-blue-500 hover:bg-gray-50"
+                                >
                                     <td className="px-6 py-4 border-t hover:">
                                         <button onClick={toggleFavorite}>
                                             {favorite ? (

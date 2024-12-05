@@ -4,9 +4,11 @@ namespace Database\Seeders;
 
 use App\Models\Announcement;
 use App\Models\Categorie;
+use App\Models\Category;
+use App\Models\City;
 use App\Models\Company;
+use App\Models\Region;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,12 +20,10 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory(10)->create();
+        // User::factory(10)->create();
 
-        Announcement::factory(50)->create();
+        Announcement::factory(10)->create();
 
-        Categorie::factory(15)->create();
-
-        Company::factory()->create();
+        // Company::factory()->create();
     }
 }
