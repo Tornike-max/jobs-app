@@ -21,10 +21,19 @@ export interface Region {
     cities: City[];
 }
 
+export interface Category {
+    id: number;
+    name: string;
+    created_at: string;
+    updated_at: string;
+}
+
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>
 > = T & {
     auth: {
         user: User;
     };
+    categories: Category[];
+    regions: Region[];
 };

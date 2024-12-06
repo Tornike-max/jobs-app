@@ -20,7 +20,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', [AnnouncementsController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [AnnouncementsController::class, 'index'])->name('dashboard');
 
 Route::get('/services', [ServicesController::class, 'index'])->name('services.index');
 Route::get('/banner', [BannerController::class, 'index'])->name('banners.index');

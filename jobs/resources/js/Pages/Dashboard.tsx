@@ -4,8 +4,12 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
 import { Head } from "@inertiajs/react";
 
-export default function Dashboard({ auth, anouncements, regions }: PageProps) {
-    console.log(anouncements);
+export default function Dashboard({
+    auth,
+    announcements,
+    regions,
+    categories,
+}: PageProps) {
     return (
         <AuthenticatedLayout
             header={
@@ -19,8 +23,11 @@ export default function Dashboard({ auth, anouncements, regions }: PageProps) {
             <div className="py-12">
                 <div className="mx-auto w-full ">
                     <div className="p-6 text-gray-900">
-                        <FilterAnnouncements regions={regions} />
-                        <JobsTable jobs={anouncements} />
+                        <FilterAnnouncements
+                            regions={regions}
+                            categories={categories}
+                        />
+                        <JobsTable jobs={announcements} />
                     </div>
                 </div>
             </div>
