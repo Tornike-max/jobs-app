@@ -29,6 +29,7 @@ class AnnouncementFactory extends Factory
             'author_id' => User::factory(),
             'company_id' => Company::factory(),
             'category_id' => fake()->numberBetween(1, 17),
+            'vacancy_type' => 'vacancy',
             'end_date' => fake()->dateTime()->format('Y-m-d H:i:s'),
             'status' => fake()->randomElement(['active', 'closed']),
         ];

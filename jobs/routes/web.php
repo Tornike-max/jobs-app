@@ -3,6 +3,7 @@
 use App\Http\Controllers\About\AboutController;
 use App\Http\Controllers\Announcements\AnnouncementsController;
 use App\Http\Controllers\Banner\BannerController;
+use App\Http\Controllers\Company\CompanyController;
 use App\Http\Controllers\Contact\ContactController;
 use App\Http\Controllers\Faq\FaqController;
 use App\Http\Controllers\ProfileController;
@@ -21,6 +22,11 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [AnnouncementsController::class, 'index'])->name('dashboard');
+Route::get('/announcements/show/{announcement}', [AnnouncementsController::class, 'show'])->name('announcements.show');
+
+
+//company
+Route::get('/company/jobs/{company}', [CompanyController::class, 'show'])->name('currentCompany.show');
 
 Route::get('/services', [ServicesController::class, 'index'])->name('services.index');
 Route::get('/banner', [BannerController::class, 'index'])->name('banners.index');

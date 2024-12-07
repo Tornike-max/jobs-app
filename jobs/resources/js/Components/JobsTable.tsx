@@ -58,7 +58,14 @@ const JobsTable = ({ jobs }: { jobs: any }) => {
                                         </button>
                                     </td>
                                     <td className="px-6 py-4 border-t">
-                                        <Link href="#">{job.title}</Link>
+                                        <Link
+                                            href={route(
+                                                "announcements.show",
+                                                job.id
+                                            )}
+                                        >
+                                            {job.title}
+                                        </Link>
                                     </td>
                                     <td className="px-6 py-4 border-t">
                                         {job.company.logo ? (

@@ -42,4 +42,9 @@ class AnnouncementsController extends Controller
 
         return inertia('Dashboard', compact(['announcements', 'regions', 'categories', 'filters']));
     }
+
+    public function show(Announcement $announcement)
+    {
+        return inertia('Announcements/Show', compact('announcement'));
+    }
 }

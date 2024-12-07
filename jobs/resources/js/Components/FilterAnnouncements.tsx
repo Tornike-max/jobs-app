@@ -19,7 +19,10 @@ const FilterAnnouncements = ({
         category: filters?.category || "",
     });
 
-    const handleFilterChange = (field: string, value: string) => {
+    const handleFilterChange = (
+        field: "search" | "type" | "region" | "category",
+        value: string
+    ) => {
         setData(field, value);
     };
 
