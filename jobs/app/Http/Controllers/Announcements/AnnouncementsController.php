@@ -8,33 +8,38 @@ use App\Models\Category;
 use App\Models\Region;
 use Illuminate\Http\Request;
 
+use function Laravel\Prompts\search;
+
 class AnnouncementsController extends Controller
 {
     public function index(Request $request)
     {
-        $query = $request->all();
+        $filters = $request->all();
 
-        $search = $query['search'] ?? null;
-        $type = $query['type'] ?? null;
-        $category = $query['category'] ?? null;
-        $region = $query['region'] ?? null;
-
-        $anouncements = null;
-        if ($search) {
-            $anouncements = Announcement::query()->with(['company', 'category', 'region'])->where('title', 'like', "%$search%")
-                ->orWhere('category.name', 'like', "%$category%")->latest()->paginate(10);
-        }
-        if ($type) {
-            $anouncements = Announcement::query()->with(['company', 'category', 'region'])->where('title', 'like', "%$search%")
-                ->orWhere('category.name', 'like', "%$category%")->latest()->paginate(10);
-        } else {
-            $anouncements = Announcement::query()->with(['company', 'category', 'region'])->latest()->paginate(10);
-        }
+        $announcements = Announcement::query()
+            ->with(['company', 'category', 'region'])
+            ->when(isset($filters['type']) && $filters['type'] !== '', function ($query) use ($filters) {
+                $query->where('vacancy_type', '=', $filters['type']);
+            })
+            ->when(isset($filters['region']) && $filters['region'] !== '', function ($query) use ($filters) {
+                $query->whereHas('region', function ($q) use ($filters) {
+                    $q->where('region', '=', $filters['region']);
+                });
+            })
+            ->when(isset($filters['category']) && $filters['category'] !== '', function ($query) use ($filters) {
+                $query->whereHas('category', function ($q) use ($filters) {
+                    $q->where('name', '=', $filters['category']);
+                });
+            })
+            ->when(isset($filters['search']) && $filters['search'] !== '', function ($query) use ($filters) {
+                $query->where('title', 'like', '%' . $filters['search'] . '%');
+            })
+            ->latest()
+            ->paginate(10);
 
         $regions = Region::query()->with('cities')->orderBy('region', 'desc')->get();
-
         $categories = Category::query()->orderBy('name', 'desc')->get();
 
-        return inertia('Dashboard', compact(['anouncements', 'regions', 'categories']));
+        return inertia('Dashboard', compact(['announcements', 'regions', 'categories', 'filters']));
     }
 }

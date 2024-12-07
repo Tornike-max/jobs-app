@@ -9,6 +9,7 @@ const JobsTable = ({ jobs }: { jobs: any }) => {
     const toggleFavorite = () => {
         setFavorite((fav) => !fav);
     };
+    console.log(jobs);
     return (
         <>
             <div className="w-full flex justify-center items-center"></div>
@@ -32,7 +33,7 @@ const JobsTable = ({ jobs }: { jobs: any }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {jobs.data.map(
+                        {jobs?.data?.map(
                             (job: {
                                 id: number;
                                 title: string;

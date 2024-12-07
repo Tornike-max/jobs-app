@@ -9,6 +9,7 @@ export default function Dashboard({
     announcements,
     regions,
     categories,
+    filters,
 }: PageProps) {
     return (
         <AuthenticatedLayout
@@ -26,6 +27,7 @@ export default function Dashboard({
                         <FilterAnnouncements
                             regions={regions}
                             categories={categories}
+                            filters={filters}
                         />
                         <JobsTable jobs={announcements} />
                     </div>

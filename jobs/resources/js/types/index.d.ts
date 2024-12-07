@@ -28,6 +28,13 @@ export interface Category {
     updated_at: string;
 }
 
+export interface FilterTypes {
+    search: string;
+    category: string;
+    region: string;
+    type: string;
+}
+
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>
 > = T & {
