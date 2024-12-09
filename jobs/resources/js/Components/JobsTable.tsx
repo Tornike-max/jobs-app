@@ -33,67 +33,128 @@ const JobsTable = ({ jobs }: { jobs: any }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {jobs?.data?.map(
-                            (job: {
-                                id: number;
-                                title: string;
-                                company: {
-                                    logo: string | undefined;
-                                    name: string;
-                                };
-                                created_at: string;
-                                end_date: string;
-                            }) => (
-                                <tr
-                                    key={job.id}
-                                    className="text-blue-500 hover:bg-gray-50"
-                                >
-                                    <td className="px-6 py-4 border-t hover:">
-                                        <button onClick={toggleFavorite}>
-                                            {favorite ? (
-                                                <FaStar />
-                                            ) : (
-                                                <FaRegStar />
-                                            )}
-                                        </button>
-                                    </td>
-                                    <td className="px-6 py-4 border-t">
-                                        <Link
-                                            href={route(
-                                                "announcements.show",
-                                                job.id
-                                            )}
-                                        >
-                                            {job.title}
-                                        </Link>
-                                    </td>
-                                    <td className="px-6 py-4 border-t">
-                                        {job.company.logo ? (
-                                            <div className="flex items-center gap-2">
-                                                <img
-                                                    className="w-14"
-                                                    alt="title"
-                                                    src={job.company.logo}
-                                                />
-                                                <Link href="#">
-                                                    {job.company.name}
-                                                </Link>
-                                            </div>
-                                        ) : (
-                                            <Link href="#">
-                                                {job.company.name}
-                                            </Link>
-                                        )}
-                                    </td>
-                                    <td className="px-6 py-4 border-t">
-                                        {formatDate(job.created_at)}
-                                    </td>
-                                    <td className="px-6 py-4 border-t">
-                                        {formatDate(job.end_date)}
-                                    </td>
-                                </tr>
-                            )
-                        )}
+                        {jobs?.data
+                            ? jobs?.data?.map(
+                                  (job: {
+                                      id: number;
+                                      title: string;
+                                      company: {
+                                          logo: string | undefined;
+                                          name: string;
+                                          id: number;
+                                      };
+                                      created_at: string;
+                                      end_date: string;
+                                  }) => (
+                                      <tr
+                                          key={job.id}
+                                          className="text-blue-500 hover:bg-gray-50"
+                                      >
+                                          <td className="px-6 py-4 border-t hover:">
+                                              <button onClick={toggleFavorite}>
+                                                  {favorite ? (
+                                                      <FaStar />
+                                                  ) : (
+                                                      <FaRegStar />
+                                                  )}
+                                              </button>
+                                          </td>
+                                          <td className="px-6 py-4 border-t">
+                                              <Link
+                                                  href={route(
+                                                      "announcements.show",
+                                                      job.id
+                                                  )}
+                                              >
+                                                  {job.title}
+                                              </Link>
+                                          </td>
+                                          <td className="px-6 py-4 border-t">
+                                              {job.company.logo ? (
+                                                  <div className="flex items-center gap-2">
+                                                      <img
+                                                          className="w-14"
+                                                          alt="title"
+                                                          src={job.company.logo}
+                                                      />
+                                                      <Link
+                                                          href={route(
+                                                              "currentCompany.show",
+                                                              job.company.id
+                                                          )}
+                                                      >
+                                                          {job.company.name}
+                                                      </Link>
+                                                  </div>
+                                              ) : (
+                                                  <Link href="#">
+                                                      {job.company.name}
+                                                  </Link>
+                                              )}
+                                          </td>
+                                          <td className="px-6 py-4 border-t">
+                                              {formatDate(job.created_at)}
+                                          </td>
+                                          <td className="px-6 py-4 border-t">
+                                              {formatDate(job.end_date)}
+                                          </td>
+                                      </tr>
+                                  )
+                              )
+                            : jobs?.map(
+                                  (job: {
+                                      company_id: number;
+                                      id: number;
+                                      title: string;
+                                      company: {
+                                          logo: string | undefined;
+                                          name: string;
+                                      };
+                                      created_at: string;
+                                      end_date: string;
+                                  }) => (
+                                      <tr
+                                          key={job.id}
+                                          className="text-blue-500 hover:bg-gray-50"
+                                      >
+                                          <td className="px-6 py-4 border-t hover:">
+                                              <button onClick={toggleFavorite}>
+                                                  {favorite ? (
+                                                      <FaStar />
+                                                  ) : (
+                                                      <FaRegStar />
+                                                  )}
+                                              </button>
+                                          </td>
+                                          <td className="px-6 py-4 border-t">
+                                              <Link
+                                                  href={route(
+                                                      "announcements.show",
+                                                      job.id
+                                                  )}
+                                              >
+                                                  {job.title}
+                                              </Link>
+                                          </td>
+                                          <td className="px-6 py-4 border-t">
+                                              <Link
+                                                  href={route(
+                                                      "currentCompany.show",
+                                                      job.company_id
+                                                  )}
+                                              >
+                                                  {job.title}
+                                              </Link>
+                                          </td>
+                                          <td className="px-6 py-4 border-t">
+                                              {formatDate(job.created_at)}
+                                          </td>
+                                          <td className="px-6 py-4 border-t">
+                                              {formatDate(job.end_date)}
+                                          </td>
+                                      </tr>
+                                  )
+                              )}
                     </tbody>
                 </table>
             </div>

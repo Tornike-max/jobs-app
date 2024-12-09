@@ -46,6 +46,7 @@ export interface Company {
     website: string;
     created_at: string;
     updated_at: string;
+    announcements: Announcement[];
 }
 
 export interface Announcement {
@@ -75,4 +76,5 @@ export type PageProps<
     categories: Category[];
     regions: Region[];
     announcement: Announcement;
+    company: Company;
 };

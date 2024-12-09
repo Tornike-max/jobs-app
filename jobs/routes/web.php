@@ -24,7 +24,6 @@ Route::get('/', function () {
 Route::get('/dashboard', [AnnouncementsController::class, 'index'])->name('dashboard');
 Route::get('/announcements/show/{announcement}', [AnnouncementsController::class, 'show'])->name('announcements.show');
 
-
 //company
 Route::get('/company/jobs/{company}', [CompanyController::class, 'show'])->name('currentCompany.show');
 

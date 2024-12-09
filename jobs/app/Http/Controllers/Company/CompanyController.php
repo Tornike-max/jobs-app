@@ -10,7 +10,10 @@ class CompanyController extends Controller
 {
     public function show(Company $company)
     {
-        $companyJobs = Company::query()->with('announcements')->where('id', '=', $company->id)->latest()->get();
-        dd($companyJobs);
+        $companyJobs = Company::query()->with('announcements')->where('id', '=', $company->id)->latest()->first();
+
+        return inertia('Company/Index', [
+            'company' => $companyJobs
+        ]);
     }
 }
