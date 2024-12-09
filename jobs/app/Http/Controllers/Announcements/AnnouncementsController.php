@@ -45,6 +45,7 @@ class AnnouncementsController extends Controller
 
     public function show(Announcement $announcement)
     {
+        $announcement = Announcement::query()->with('company')->first();
         return inertia('Announcements/Show', compact('announcement'));
     }
 }

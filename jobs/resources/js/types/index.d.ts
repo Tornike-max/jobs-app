@@ -35,6 +35,19 @@ export interface FilterTypes {
     type: string;
 }
 
+export interface Company {
+    id: number;
+    name: string;
+    description: string;
+    email: string;
+    phone: string;
+    location: string;
+    logo: string;
+    website: string;
+    created_at: string;
+    updated_at: string;
+}
+
 export interface Announcement {
     id: number;
     author_id: number;
@@ -50,6 +63,7 @@ export interface Announcement {
     vacancy_type: string;
     created_at: string;
     updated_at: string;
+    company: Company;
 }
 
 export type PageProps<
