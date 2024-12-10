@@ -12,6 +12,22 @@ class ServicesController extends Controller
     {
         $pricing = PricingPlan::query()->with('options')->latest()->get();
 
-        return inertia('Services/Index', compact('pricing'));
+        return inertia('Services/Index', [
+            'pricing' => $pricing,
+            'forWhat' => 'pricing'
+        ]);
+    }
+    public function publish()
+    {
+        return inertia('Services/Index', [
+            'forWhat' => 'publish'
+        ]);
+    }
+
+    public function whyUs()
+    {
+        return inertia('Services/Index', [
+            'forWhat' => 'us'
+        ]);
     }
 }

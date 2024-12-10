@@ -89,6 +89,22 @@ interface PricingPlan {
     options: PricingOption[];
 }
 
+export interface Faqs {
+    question: string;
+    answer: string;
+    id: number;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface Abouts {
+    headerText: string;
+    middleText: string;
+    footerText: string;
+    founder: string;
+    co_founder: string;
+}
+
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>
 > = T & {
@@ -100,4 +116,7 @@ export type PageProps<
     announcement: Announcement;
     company: Company;
     pricing: PricingPlan[];
+    forWhat: string;
+    faqs: Faqs[];
+    abouts: Abouts[];
 };

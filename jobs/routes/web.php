@@ -28,8 +28,11 @@ Route::get('/announcements/show/{announcement}', [AnnouncementsController::class
 //company
 Route::get('/company/jobs/{company}', [CompanyController::class, 'show'])->name('currentCompany.show');
 
+//pricing
 Route::get('/services', [ServicesController::class, 'index'])->name('services.index');
-Route::get('/banner', [BannerController::class, 'index'])->name('banners.index');
+Route::get('/publish', [ServicesController::class, 'publish'])->name('services.publish');
+Route::get('/why-us', [ServicesController::class, 'whyUs'])->name('services.whyUs');
+
 Route::get('/faq', [FaqController::class, 'index'])->name('faqs.index');
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
@@ -40,7 +43,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-//pricing
-Route::get('/pricing', [PriceController::class, 'index'])->name('pricing.index');
+
 
 require __DIR__ . '/auth.php';

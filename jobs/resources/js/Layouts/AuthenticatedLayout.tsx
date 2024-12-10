@@ -35,16 +35,15 @@ export default function Authenticated({
                                 </NavLink>
                                 <NavLink
                                     href={route("services.index")}
-                                    active={route().current("services.index")}
+                                    active={
+                                        route().current("services.index") ||
+                                        route().current("services.publish") ||
+                                        route().current("services.whyUs")
+                                    }
                                 >
                                     ტარიფები
                                 </NavLink>
-                                <NavLink
-                                    href={route("banners.index")}
-                                    active={route().current("banners.index")}
-                                >
-                                    ბანერი
-                                </NavLink>
+
                                 <NavLink
                                     href={route("faqs.index")}
                                     active={route().current("faqs.index")}
@@ -173,12 +172,7 @@ export default function Authenticated({
                         >
                             ტარიფები
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            href={route("banners.index")}
-                            active={route().current("banners.index")}
-                        >
-                            ბანერი
-                        </ResponsiveNavLink>
+
                         <ResponsiveNavLink
                             href={route("faqs.index")}
                             active={route().current("faqs.index")}
