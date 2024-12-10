@@ -67,6 +67,28 @@ export interface Announcement {
     company: Company;
 }
 
+interface PricingOption {
+    id: number;
+    pricing_plan_id: number;
+    min_vacancies?: number;
+    max_vacancies?: number;
+    price: string;
+    created_at: string;
+    updated_at: string;
+}
+
+// Pricing Plan Interface
+interface PricingPlan {
+    id: number;
+    name: string;
+    description: string;
+    is_vip: boolean;
+    base_duration_days: string;
+    created_at: string;
+    updated_at: string;
+    options: PricingOption[];
+}
+
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>
 > = T & {
@@ -77,4 +99,5 @@ export type PageProps<
     regions: Region[];
     announcement: Announcement;
     company: Company;
+    pricing: PricingPlan[];
 };

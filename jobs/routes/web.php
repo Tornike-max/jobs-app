@@ -6,6 +6,7 @@ use App\Http\Controllers\Banner\BannerController;
 use App\Http\Controllers\Company\CompanyController;
 use App\Http\Controllers\Contact\ContactController;
 use App\Http\Controllers\Faq\FaqController;
+use App\Http\Controllers\Price\PriceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Services\ServicesController;
 use Illuminate\Foundation\Application;
@@ -38,5 +39,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+//pricing
+Route::get('/pricing', [PriceController::class, 'index'])->name('pricing.index');
 
 require __DIR__ . '/auth.php';
