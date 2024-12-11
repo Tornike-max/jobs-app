@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Announcements;
 use App\Http\Controllers\Controller;
 use App\Models\Announcement;
 use App\Models\Category;
+use App\Models\PricingOption;
+use App\Models\PricingPlan;
 use App\Models\Region;
 use Illuminate\Http\Request;
 
@@ -47,5 +49,35 @@ class AnnouncementsController extends Controller
     {
         $announcement = Announcement::query()->with('company')->first();
         return inertia('Announcements/Show', compact('announcement'));
+    }
+
+    public function create()
+    {
+        $pricing = PricingOption::query()->with('plan')->orderBy('id', 'asc')->get();
+        $categories = Category::query()->orderBy('id', 'asc')->get();
+
+        return inertia('Announcements/Create', compact(['pricing', 'categories']));
+    }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'identicalCode' => 'required|digits:11',
+            'fullname' => 'required|string|max:255',
+            'phone' => 'required|string|min:9|max:15',
+            'email' => 'required|email|max:255',
+            'announcementName' => 'required|string|max:255',
+            'salary' => 'nullable|numeric|min:0',
+            'employement_type' => 'required|in:part,full',
+            'category' => 'required|exists:categories,id',
+            'vacancy_type' => 'required|in:vacancy,stipend,trainings',
+            'comment' => 'nullable|string',
+            'description' => 'required|string',
+            'product' => 'required|string',
+            'file' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        dd($validatedData);
     }
 }

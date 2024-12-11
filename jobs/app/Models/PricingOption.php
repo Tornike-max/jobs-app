@@ -12,6 +12,6 @@ class PricingOption extends Model
 
     public function plan()
     {
-        return $this->belongsTo(PricingPlan::class);
+        return $this->belongsTo(PricingPlan::class, 'pricing_plan_id');
     }
 }

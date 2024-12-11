@@ -70,6 +70,7 @@ export interface Announcement {
 interface PricingOption {
     id: number;
     pricing_plan_id: number;
+    plan: PricingPlan;
     min_vacancies?: number;
     max_vacancies?: number;
     price: string;
@@ -82,7 +83,7 @@ interface PricingPlan {
     id: number;
     name: string;
     description: string;
-    is_vip: boolean;
+    is_vip: number;
     base_duration_days: string;
     created_at: string;
     updated_at: string;

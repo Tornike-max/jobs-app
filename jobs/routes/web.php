@@ -24,6 +24,8 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [AnnouncementsController::class, 'index'])->name('dashboard');
 Route::get('/announcements/show/{announcement}', [AnnouncementsController::class, 'show'])->name('announcements.show');
+Route::get('/announcements/create', [AnnouncementsController::class, 'create'])->name('announcements.create');
+Route::post('/announcements/store', [AnnouncementsController::class, 'store'])->name('announcements.store');
 
 //company
 Route::get('/company/jobs/{company}', [CompanyController::class, 'show'])->name('currentCompany.show');

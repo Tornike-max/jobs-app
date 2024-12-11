@@ -13,9 +13,12 @@ const Publish = () => {
                 <p>
                     იმისთვის, რომ განცხადება ოპერატიულად განათავსოთ, დააკლიკეთ
                     აქ:{" "}
-                    <Link className="text-blue-500" href="#">
-                        https://bit.ly/postjobsge{" "}
-                    </Link>
+                    <Link
+                        className="text-blue-500 underline"
+                        href={route("announcements.create")}
+                    >
+                        Link
+                    </Link>{" "}
                     ან დაგვიკავშირდით ელ-ფოსტაზე{" "}
                     <span className="text-blue-500">
                         ozbetelashvilitornike2@gmail.com
