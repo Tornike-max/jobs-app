@@ -43,7 +43,6 @@ const Create = ({
 
     const handleSubmit = (e: { preventDefault: () => void }) => {
         e.preventDefault();
-        console.log(data);
         post(route("announcements.store"));
     };
 

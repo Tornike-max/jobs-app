@@ -9,6 +9,8 @@ use App\Models\PricingOption;
 use App\Models\PricingPlan;
 use App\Models\Region;
 use Illuminate\Http\Request;
+use Stripe\Checkout\Session;
+use Stripe\Stripe;
 
 use function Laravel\Prompts\search;
 
@@ -61,6 +63,8 @@ class AnnouncementsController extends Controller
 
     public function store(Request $request)
     {
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+
         $validatedData = $request->validate([
             'identicalCode' => 'required|digits:11',
             'fullname' => 'required|string|max:255',
@@ -78,6 +82,33 @@ class AnnouncementsController extends Controller
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        dd($validatedData);
+        $session = Session::create([
+            'payment_method_types' => ['card'],
+            'line_items' => [
+                [
+                    'price_data' => [
+                        'currency' => 'usd',
+                        'product_data' => [
+                            'name' => 'Job Posting Fee',
+                        ],
+                        'unit_amount' => 1000,
+                    ],
+                    'quantity' => 1,
+                ],
+            ],
+            'mode' => 'payment',
+            'success_url' => route('payment.success'),
+            'cancel_url' => route('payment.cancel'),
+        ]);
+    }
+
+    public function success()
+    {
+        dd('Success');;
+    }
+
+    public function cancel()
+    {
+        dd('Failure');;
     }
 }
