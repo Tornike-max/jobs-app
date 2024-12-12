@@ -30,6 +30,8 @@ Route::get('/announcements/create/success', [AnnouncementsController::class, 'su
 Route::get('/announcements/create/cancel', [AnnouncementsController::class, 'cancel'])->name('payment.cancel');
 //company
 Route::get('/company/jobs/{company}', [CompanyController::class, 'show'])->name('currentCompany.show');
+Route::get('/company/create', [CompanyController::class, 'create'])->name('company.create');
+Route::post('/company/store', [CompanyController::class, 'store'])->name('company.store');
 
 //pricing
 Route::get('/services', [ServicesController::class, 'index'])->name('services.index');

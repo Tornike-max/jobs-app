@@ -11,12 +11,22 @@ class Company extends Model
     use HasFactory, Notifiable;
 
     protected $fillable = [
-        'slug',
-        'name'
+        'email',
+        'name',
+        'phone',
+        'website',
+        'location',
+        'description',
+        'logo',
+        'user_id'
     ];
 
     public function announcements()
     {
         return $this->hasMany(Announcement::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

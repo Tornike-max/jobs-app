@@ -80,6 +80,9 @@ interface PricingOption {
 
 // Pricing Plan Interface
 interface PricingPlan {
+    price: string | number | readonly string[] | undefined;
+    plan: any;
+    max_vacancies: any;
     id: number;
     name: string;
     description: string;
@@ -117,6 +120,7 @@ export type PageProps<
     announcement: Announcement;
     company: Company;
     pricing: PricingPlan[];
+    categories: Category[];
     forWhat: string;
     faqs: Faqs[];
     abouts: Abouts[];

@@ -16,6 +16,7 @@ class Announcement extends Model
         'location',
         'salary',
         'employment_type',
+        'category',
         'author_id',
         'company_id',
         'status'

@@ -21,9 +21,10 @@ const Create = ({
         phone: "",
         email: "",
         announcementName: "",
+        location: "",
         salary: "",
         employement_type: "",
-        category: "",
+        category_id: "",
         vacancy_type: "",
         comment: "",
         description: "",
@@ -153,6 +154,23 @@ const Create = ({
                             )}
                         </div>
                         <div className="w-full flex justify-center items-start flex-col gap-1">
+                            <InputLabel>ლოკაცია *</InputLabel>
+                            <TextInput
+                                placeholder="ლოკაცია"
+                                className="w-full"
+                                value={data.location}
+                                onChange={(e) =>
+                                    setData("location", e.target.value)
+                                }
+                                type="text"
+                            />
+                            {errors.location && (
+                                <span className="text-red-500 text-sm">
+                                    {errors.location}
+                                </span>
+                            )}
+                        </div>
+                        <div className="w-full flex justify-center items-start flex-col gap-1">
                             <InputLabel>ხელფასი</InputLabel>
                             <TextInput
                                 placeholder="ხელფასი"
@@ -195,9 +213,9 @@ const Create = ({
                             <InputLabel>კატეგორია</InputLabel>
                             <select
                                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 "
-                                value={data.category}
+                                value={data.category_id}
                                 onChange={(e) =>
-                                    setData("category", e.target.value)
+                                    setData("category_id", e.target.value)
                                 }
                             >
                                 {categories.map((category) => (
@@ -209,9 +227,9 @@ const Create = ({
                                     </option>
                                 ))}
                             </select>
-                            {errors.category && (
+                            {errors.category_id && (
                                 <span className="text-red-500 text-sm">
-                                    {errors.category}
+                                    {errors.category_id}
                                 </span>
                             )}
                         </div>

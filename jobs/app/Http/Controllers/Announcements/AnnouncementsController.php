@@ -8,7 +8,9 @@ use App\Models\Category;
 use App\Models\PricingOption;
 use App\Models\PricingPlan;
 use App\Models\Region;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
@@ -74,16 +76,21 @@ class AnnouncementsController extends Controller
             'announcementName' => 'required|string|max:255',
             'salary' => 'nullable|numeric|min:0',
             'employement_type' => 'required|in:part,full',
-            'category' => 'required|exists:categories,id',
+            'category_id' => 'required|exists:categories,id',
             'vacancy_type' => 'required|in:vacancy,stipend,trainings',
             'comment' => 'nullable|string',
             'description' => 'required|string',
+            'location' => 'required|string',
             'product' => 'required|string',
             'file' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        // dd($validatedData['category']);
 
+        // $categories = Category::query()->where('name', '=', $validatedData['category'])->first();
+
+        // dd($categories);
         $session = Session::create([
             'payment_method_types' => ['card'],
             'line_items' => [[
@@ -101,11 +108,37 @@ class AnnouncementsController extends Controller
             'cancel_url' => route('payment.cancel'),
         ]);
 
+
+        $announcement = Announcement::create([
+            'title' => $validatedData['announcementName'],
+            'description' => $validatedData['description'],
+            'location' => $validatedData['location'],
+            'salary' => $validatedData['salary'],
+            'employment_type' => $validatedData['employement_type'],
+            'category_id' => $validatedData['category_id'],
+            'author_id' => Auth::user()->id,
+            'company_id' => Auth::user()->companies[0]->id
+        ]);
+
+        Transaction::create([
+            'identical_code' => $validatedData['identicalCode'],
+            'phone' => $validatedData['phone'],
+            'transaction_id' => $session['id'],
+            'status' => 'pending',
+            'amount' => $this->calculatePrice($validatedData['product']),
+            'payment_method' => 'Stripe',
+            'currency' => 'GEL',
+            'paid_at' => now(),
+            'user_id' => Auth::user()->id,
+            'announcement_id' => $announcement->id
+        ]);
+
         return Inertia::location($session->url);
     }
 
     public function success()
     {
+
         return inertia('Payment/Success');
     }
 
