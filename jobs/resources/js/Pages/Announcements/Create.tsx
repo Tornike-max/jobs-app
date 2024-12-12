@@ -2,7 +2,7 @@ import ApplicationLogo from "@/Components/ApplicationLogo";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Category, PricingOption, PricingPlan } from "@/types";
+import { Category, City, PricingOption, PricingPlan } from "@/types";
 import { Head, useForm } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
@@ -11,9 +11,11 @@ const stripePromise = loadStripe(import.meta.env.STRIPE_KEY);
 const Create = ({
     pricing,
     categories,
+    cities,
 }: {
     pricing: PricingOption[];
     categories: Category[];
+    cities: City[];
 }) => {
     const { post, processing, data, setData, errors, reset } = useForm({
         identicalCode: "",
@@ -21,7 +23,7 @@ const Create = ({
         phone: "",
         email: "",
         announcementName: "",
-        location: "",
+        city_id: "",
         salary: "",
         employement_type: "",
         category_id: "",
@@ -42,7 +44,7 @@ const Create = ({
         }
     }, [data.product, data.logo]);
 
-    console.log(price);
+    console.log(cities);
 
     const handleSubmit = async (e: { preventDefault: () => void }) => {
         e.preventDefault();
@@ -154,19 +156,23 @@ const Create = ({
                             )}
                         </div>
                         <div className="w-full flex justify-center items-start flex-col gap-1">
-                            <InputLabel>ლოკაცია *</InputLabel>
-                            <TextInput
-                                placeholder="ლოკაცია"
-                                className="w-full"
-                                value={data.location}
+                            <InputLabel>ლოკაცია</InputLabel>
+                            <select
+                                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 "
+                                value={data.city_id}
                                 onChange={(e) =>
-                                    setData("location", e.target.value)
+                                    setData("city_id", e.target.value)
                                 }
-                                type="text"
-                            />
-                            {errors.location && (
+                            >
+                                {cities.map((city) => (
+                                    <option key={city.id} value={city.id}>
+                                        {city.name}
+                                    </option>
+                                ))}
+                            </select>
+                            {errors.city_id && (
                                 <span className="text-red-500 text-sm">
-                                    {errors.location}
+                                    {errors.city_id}
                                 </span>
                             )}
                         </div>

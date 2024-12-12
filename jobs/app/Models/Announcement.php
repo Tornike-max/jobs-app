@@ -13,10 +13,11 @@ class Announcement extends Model
     protected $fillable = [
         'title',
         'description',
-        'location',
+        'region_id',
         'salary',
+        'vacancy_type',
         'employment_type',
-        'category',
+        'category_id',
         'author_id',
         'company_id',
         'status'

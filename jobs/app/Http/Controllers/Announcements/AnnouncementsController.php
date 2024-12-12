@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Announcements;
 use App\Http\Controllers\Controller;
 use App\Models\Announcement;
 use App\Models\Category;
+use App\Models\City;
 use App\Models\PricingOption;
 use App\Models\PricingPlan;
 use App\Models\Region;
@@ -60,8 +61,9 @@ class AnnouncementsController extends Controller
     {
         $pricing = PricingOption::query()->with('plan')->orderBy('id', 'asc')->get();
         $categories = Category::query()->orderBy('id', 'asc')->get();
+        $cities = City::query()->with('region')->orderBy('name', 'desc')->get();
 
-        return inertia('Announcements/Create', compact(['pricing', 'categories']));
+        return inertia('Announcements/Create', compact(['pricing', 'categories', 'cities']));
     }
 
     public function store(Request $request)
@@ -80,17 +82,15 @@ class AnnouncementsController extends Controller
             'vacancy_type' => 'required|in:vacancy,stipend,trainings',
             'comment' => 'nullable|string',
             'description' => 'required|string',
-            'location' => 'required|string',
+            'city_id' => 'required',
             'product' => 'required|string',
             'file' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        // dd($validatedData['category']);
+        $region_id = City::query()->where('id', '=', $validatedData['city_id'])->first()->region_id;
 
-        // $categories = Category::query()->where('name', '=', $validatedData['category'])->first();
 
-        // dd($categories);
         $session = Session::create([
             'payment_method_types' => ['card'],
             'line_items' => [[
@@ -108,19 +108,21 @@ class AnnouncementsController extends Controller
             'cancel_url' => route('payment.cancel'),
         ]);
 
-
-        $announcement = Announcement::create([
+        $announcementData = [
             'title' => $validatedData['announcementName'],
             'description' => $validatedData['description'],
-            'location' => $validatedData['location'],
             'salary' => $validatedData['salary'],
             'employment_type' => $validatedData['employement_type'],
+            'vacancy_type' => $validatedData['vacancy_type'],
             'category_id' => $validatedData['category_id'],
             'author_id' => Auth::user()->id,
-            'company_id' => Auth::user()->companies[0]->id
-        ]);
+            'company_id' => Auth::user()->companies[0]->id,
+            'region_id' => $region_id
+        ];
 
-        Transaction::create([
+        $announcement = Announcement::create($announcementData);
+
+        $transactionData = [
             'identical_code' => $validatedData['identicalCode'],
             'phone' => $validatedData['phone'],
             'transaction_id' => $session['id'],
@@ -131,7 +133,9 @@ class AnnouncementsController extends Controller
             'paid_at' => now(),
             'user_id' => Auth::user()->id,
             'announcement_id' => $announcement->id
-        ]);
+        ];
+
+        Transaction::create($transactionData);
 
         return Inertia::location($session->url);
     }
