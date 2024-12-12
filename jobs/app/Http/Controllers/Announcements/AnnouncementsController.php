@@ -106,12 +106,12 @@ class AnnouncementsController extends Controller
 
     public function success()
     {
-        dd('Success');;
+        return inertia('Payment/Success');
     }
 
     public function cancel()
     {
-        dd('Failure');;
+        return inertia('Payment/Cancel');
     }
 
     private function calculatePrice($price)
