@@ -5,7 +5,9 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Category, PricingOption, PricingPlan } from "@/types";
 import { Head, useForm } from "@inertiajs/react";
 import { useEffect, useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
 
+const stripePromise = loadStripe(import.meta.env.STRIPE_KEY);
 const Create = ({
     pricing,
     categories,
@@ -41,8 +43,9 @@ const Create = ({
 
     console.log(price);
 
-    const handleSubmit = (e: { preventDefault: () => void }) => {
+    const handleSubmit = async (e: { preventDefault: () => void }) => {
         e.preventDefault();
+
         post(route("announcements.store"));
     };
 

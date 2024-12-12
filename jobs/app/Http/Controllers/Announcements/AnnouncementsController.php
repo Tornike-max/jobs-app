@@ -9,6 +9,7 @@ use App\Models\PricingOption;
 use App\Models\PricingPlan;
 use App\Models\Region;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
 
@@ -82,24 +83,25 @@ class AnnouncementsController extends Controller
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+
         $session = Session::create([
             'payment_method_types' => ['card'],
-            'line_items' => [
-                [
-                    'price_data' => [
-                        'currency' => 'usd',
-                        'product_data' => [
-                            'name' => 'Job Posting Fee',
-                        ],
-                        'unit_amount' => 1000,
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'gel',
+                    'product_data' => [
+                        'name' => 'Jop Posting Service',
                     ],
-                    'quantity' => 1,
+                    'unit_amount' => $this->calculatePrice($validatedData['product']),
                 ],
-            ],
+                'quantity' => 1,
+            ]],
             'mode' => 'payment',
             'success_url' => route('payment.success'),
             'cancel_url' => route('payment.cancel'),
         ]);
+
+        return Inertia::location($session->url);
     }
 
     public function success()
@@ -110,5 +112,24 @@ class AnnouncementsController extends Controller
     public function cancel()
     {
         dd('Failure');;
+    }
+
+    private function calculatePrice($price)
+    {
+        if (!is_numeric($price)) {
+            throw new \InvalidArgumentException('The price must be a valid number.');
+        }
+
+        $price = floatval($price);
+
+        $conversionRate = 0.35;
+
+        $usdPrice = $price * $conversionRate;
+
+        if ($usdPrice < 0.50) {
+            throw new \Exception('The amount is too low. Please set a higher price.');
+        }
+
+        return intval($price * 100);
     }
 }
