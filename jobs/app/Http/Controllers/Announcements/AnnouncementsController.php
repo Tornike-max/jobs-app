@@ -53,8 +53,10 @@ class AnnouncementsController extends Controller
 
     public function show(Announcement $announcement)
     {
-        $announcement = Announcement::query()->with('company')->first();
-        return inertia('Announcements/Show', compact('announcement'));
+        $announcementData = Announcement::query()->with('company')->where('id', '=', $announcement['id'])->first();
+        return inertia('Announcements/Show', [
+            'announcement' => $announcementData
+        ]);
     }
 
     public function create()
