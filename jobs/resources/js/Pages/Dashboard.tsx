@@ -29,7 +29,7 @@ export default function Dashboard({
                             categories={categories}
                             filters={filters}
                         />
-                        <JobsTable jobs={announcements} />
+                        <JobsTable jobs={announcements} user={auth.user} />
                     </div>
                 </div>
             </div>

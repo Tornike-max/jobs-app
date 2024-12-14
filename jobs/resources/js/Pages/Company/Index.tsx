@@ -1,4 +1,5 @@
 import JobsTable from "@/Components/JobsTable";
+import { showImage } from "@/helpers/helpers";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
 import { Head, Link } from "@inertiajs/react";
@@ -22,7 +23,7 @@ const Index = ({ auth, company }: PageProps) => {
                     </h2>
                     <img
                         className="max-w-48 w-full rounded-md"
-                        src={company.logo}
+                        src={showImage(company.logo)}
                     />
                 </div>
             }

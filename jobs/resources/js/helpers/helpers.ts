@@ -20,6 +20,13 @@ export function formatDate(dateString: string): string {
     const day = date.getDate();
     const month = months[date.getMonth()];
 
-    // საბოლოო შედეგი
     return `${day.toString().padStart(2, "0")} ${month}`;
 }
+
+export const showImage = (imagePath: string) => {
+    if (imagePath.includes("logos")) {
+        return `/storage//${imagePath}`;
+    } else {
+        return imagePath;
+    }
+};

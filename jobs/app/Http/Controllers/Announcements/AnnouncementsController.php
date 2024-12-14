@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Announcement;
 use App\Models\Category;
 use App\Models\City;
+use App\Models\Company;
 use App\Models\PricingOption;
 use App\Models\PricingPlan;
 use App\Models\Region;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
@@ -25,7 +27,7 @@ class AnnouncementsController extends Controller
         $filters = $request->all();
 
         $announcements = Announcement::query()
-            ->with(['company', 'category', 'region'])
+            ->with(['company', 'category', 'region', 'author'])
             ->when(isset($filters['type']) && $filters['type'] !== '', function ($query) use ($filters) {
                 $query->where('vacancy_type', '=', $filters['type']);
             })
@@ -92,7 +94,6 @@ class AnnouncementsController extends Controller
 
         $region_id = City::query()->where('id', '=', $validatedData['city_id'])->first()->region_id;
 
-
         $session = Session::create([
             'payment_method_types' => ['card'],
             'line_items' => [[
@@ -101,7 +102,7 @@ class AnnouncementsController extends Controller
                     'product_data' => [
                         'name' => 'Jop Posting Service',
                     ],
-                    'unit_amount' => $this->calculatePrice($validatedData['product']),
+                    'unit_amount' => $this->calculatePrice($validatedData['product'], $validatedData['logo']),
                 ],
                 'quantity' => 1,
             ]],
@@ -122,14 +123,28 @@ class AnnouncementsController extends Controller
             'region_id' => $region_id
         ];
 
+        if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
+            $logoPath = $request->file('logo')->store('logos', 'public');
+            $validatedData['logo'] = $logoPath;
+        }
+
         $announcement = Announcement::create($announcementData);
+        $company = Company::query()->where('id', '=', Auth::user()->companies[0]->id)->first();
+        if (isset($company)) {
+            if ($company && $company->logo && Storage::exists($company->logo)) {
+                Storage::delete($company->logo);
+            }
+            $company->update([
+                'logo' => $validatedData['logo']
+            ]);
+        }
 
         $transactionData = [
             'identical_code' => $validatedData['identicalCode'],
             'phone' => $validatedData['phone'],
             'transaction_id' => $session['id'],
             'status' => 'pending',
-            'amount' => $this->calculatePrice($validatedData['product']),
+            'amount' => $this->calculatePrice($validatedData['product'], $validatedData['logo']),
             'payment_method' => 'Stripe',
             'currency' => 'GEL',
             'paid_at' => now(),
@@ -153,22 +168,37 @@ class AnnouncementsController extends Controller
         return inertia('Payment/Cancel');
     }
 
-    private function calculatePrice($price)
+    private function calculatePrice($price, $logo = null)
     {
         if (!is_numeric($price)) {
             throw new \InvalidArgumentException('The price must be a valid number.');
         }
 
-        $price = floatval($price);
 
-        $conversionRate = 0.35;
+        if ($logo) {
+            $price = floatval($price + 10);
 
-        $usdPrice = $price * $conversionRate;
+            $conversionRate = 0.35;
 
-        if ($usdPrice < 0.50) {
-            throw new \Exception('The amount is too low. Please set a higher price.');
+            $usdPrice = $price * $conversionRate;
+
+            if ($usdPrice < 0.50) {
+                throw new \Exception('The amount is too low. Please set a higher price.');
+            }
+
+            return intval($price * 100);
+        } else {
+            $price = floatval($price);
+
+            $conversionRate = 0.35;
+
+            $usdPrice = $price * $conversionRate;
+
+            if ($usdPrice < 0.50) {
+                throw new \Exception('The amount is too low. Please set a higher price.');
+            }
+
+            return intval($price * 100);
         }
-
-        return intval($price * 100);
     }
 }

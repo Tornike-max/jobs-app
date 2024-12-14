@@ -1,15 +1,16 @@
-import { formatDate } from "@/helpers/helpers";
+import { formatDate, showImage } from "@/helpers/helpers";
+import { User } from "@/types";
 import { Link } from "@inertiajs/react";
-import React, { useState } from "react";
-import { FaRegStar } from "react-icons/fa";
+import { useState } from "react";
+import { FaRegStar, FaUser } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 
-const JobsTable = ({ jobs }: { jobs: any }) => {
+const JobsTable = ({ jobs, user }: { jobs: any; user: User }) => {
     const [favorite, setFavorite] = useState(false);
     const toggleFavorite = () => {
         setFavorite((fav) => !fav);
     };
-    console.log(jobs);
+
     return (
         <>
             <div className="w-full flex justify-center items-center"></div>
@@ -43,6 +44,10 @@ const JobsTable = ({ jobs }: { jobs: any }) => {
                                           name: string;
                                           id: number;
                                       };
+                                      author: {
+                                          id: number;
+                                          name: string;
+                                      };
                                       created_at: string;
                                       end_date: string;
                                   }) => (
@@ -61,11 +66,14 @@ const JobsTable = ({ jobs }: { jobs: any }) => {
                                           </td>
                                           <td className="px-6 py-4 border-t">
                                               <Link
+                                                  className="flex items-center gap-2"
                                                   href={route(
                                                       "announcements.show",
                                                       job.id
                                                   )}
                                               >
+                                                  {job.author.id ===
+                                                      user.id && <FaUser />}
                                                   {job.title}
                                               </Link>
                                           </td>
@@ -75,7 +83,9 @@ const JobsTable = ({ jobs }: { jobs: any }) => {
                                                       <img
                                                           className="w-14"
                                                           alt="title"
-                                                          src={job.company.logo}
+                                                          src={showImage(
+                                                              job.company.logo
+                                                          )}
                                                       />
                                                       <Link
                                                           href={route(
@@ -108,6 +118,10 @@ const JobsTable = ({ jobs }: { jobs: any }) => {
                                       title: string;
                                       company: {
                                           logo: string | undefined;
+                                          name: string;
+                                      };
+                                      author: {
+                                          id: number;
                                           name: string;
                                       };
                                       created_at: string;
