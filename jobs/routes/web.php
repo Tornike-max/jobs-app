@@ -41,6 +41,8 @@ Route::get('/why-us', [ServicesController::class, 'whyUs'])->name('services.whyU
 Route::get('/faq', [FaqController::class, 'index'])->name('faqs.index');
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

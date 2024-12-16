@@ -1,9 +1,27 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import { useState } from "react";
 
-const Index = () => {
+const Index = ({ csrf }: { csrf: string }) => {
     const [agreed, setAgreed] = useState(false);
+
+    const { post, processing, setData, data, errors } = useForm({
+        name: "",
+        last_name: "",
+        email: "",
+        company: "",
+        message: "",
+        phone: "",
+    });
+
+    const handleSendEmail = (e: { preventDefault: () => void }) => {
+        e.preventDefault();
+        post(
+            route("contact.send", {
+                _token: csrf,
+            })
+        );
+    };
 
     return (
         <AuthenticatedLayout
@@ -28,8 +46,8 @@ const Index = () => {
                             </p>
                         </div>
                         <form
-                            action="#"
                             method="POST"
+                            onSubmit={(e) => handleSendEmail(e)}
                             className="mx-auto mt-8 max-w-2xl sm:mt-20"
                         >
                             <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
@@ -45,7 +63,11 @@ const Index = () => {
                                             id="first-name"
                                             name="first-name"
                                             type="text"
+                                            value={data.name}
                                             autoComplete="given-name"
+                                            onChange={(e) =>
+                                                setData("name", e.target.value)
+                                            }
                                             className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
                                         />
                                     </div>
@@ -61,6 +83,13 @@ const Index = () => {
                                         <input
                                             id="last-name"
                                             name="last-name"
+                                            value={data.last_name}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "last_name",
+                                                    e.target.value
+                                                )
+                                            }
                                             type="text"
                                             autoComplete="family-name"
                                             className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
@@ -78,6 +107,13 @@ const Index = () => {
                                         <input
                                             id="company"
                                             name="company"
+                                            value={data.company}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "company",
+                                                    e.target.value
+                                                )
+                                            }
                                             type="text"
                                             autoComplete="organization"
                                             className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
@@ -95,7 +131,11 @@ const Index = () => {
                                         <input
                                             id="email"
                                             name="email"
+                                            value={data.email}
                                             type="email"
+                                            onChange={(e) =>
+                                                setData("email", e.target.value)
+                                            }
                                             autoComplete="email"
                                             className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
                                         />
@@ -110,25 +150,19 @@ const Index = () => {
                                     </label>
                                     <div className="mt-2.5">
                                         <div className="flex rounded-md bg-white outline outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                            <div className="grid shrink-0 grid-cols-1 focus-within:relative">
-                                                <select
-                                                    id="country"
-                                                    name="country"
-                                                    autoComplete="country"
-                                                    aria-label="Country"
-                                                    className="col-start-1 row-start-1 w-full appearance-none rounded-md py-2 pl-3.5 pr-7 text-base text-gray-500 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                                >
-                                                    <option>US</option>
-                                                    <option>CA</option>
-                                                    <option>EU</option>
-                                                </select>
-                                            </div>
                                             <input
                                                 id="phone-number"
                                                 name="phone-number"
+                                                value={data.phone}
                                                 type="text"
+                                                onChange={(e) =>
+                                                    setData(
+                                                        "phone",
+                                                        e.target.value
+                                                    )
+                                                }
                                                 placeholder="123-456-7890"
-                                                className="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
+                                                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
                                             />
                                         </div>
                                     </div>
@@ -144,19 +178,29 @@ const Index = () => {
                                         <textarea
                                             id="message"
                                             name="message"
+                                            onChange={(e) =>
+                                                setData(
+                                                    "message",
+                                                    e.target.value
+                                                )
+                                            }
                                             rows={4}
                                             className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
-                                            defaultValue={""}
-                                        />
+                                        >
+                                            {data.message}
+                                        </textarea>
                                     </div>
                                 </div>
                             </div>
                             <div className="mt-10">
                                 <button
                                     type="submit"
+                                    disabled={processing}
                                     className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
-                                    დაგვიკავშირდით
+                                    {processing
+                                        ? "დაელოდეთ..."
+                                        : "დაგვიკავშირდით"}
                                 </button>
                             </div>
                         </form>
