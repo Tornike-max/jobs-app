@@ -5,6 +5,8 @@
 
     <div>
         <p><strong>სახელი:</strong> {{ $mailData['name'] }}</p>
+        <p><strong>ტელეფონის ნომერი:</strong> {{ $mailData['phone'] }}</p>
+        <p><strong>კომპანია:</strong> {{ $mailData['company'] }}</p>
         <p><strong>ელ. ფოსტა:</strong> {{ $mailData['email'] }}</p>
         <p><strong>შეტყობინება:</strong> {{ $mailData['message'] }}</p>
     </div>
