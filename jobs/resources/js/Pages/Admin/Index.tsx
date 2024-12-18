@@ -12,6 +12,9 @@ import {
     PointElement,
     LineElement,
 } from "chart.js";
+import DashboardCard from "@/Components/DashboardCard";
+import BarChart from "@/Components/BarChart";
+import LineChart from "@/Components/LineChart";
 
 ChartJS.register(
     CategoryScale,
@@ -24,7 +27,17 @@ ChartJS.register(
     Legend
 );
 
-const Index = () => {
+const Index = ({
+    announcementsCount,
+    latestAnnouncementsCount,
+    activeUsers,
+    transactionsCount,
+}: {
+    announcementsCount: number;
+    latestAnnouncementsCount: number;
+    activeUsers: number;
+    transactionsCount: number;
+}) => {
     const barData = {
         labels: ["React დეველოპერი", "UI/UX დიზაინერი", "Laravel დეველოპერი"],
         datasets: [
@@ -62,59 +75,34 @@ const Index = () => {
 
             <div className="py-12">
                 <div className="mx-auto w-full sm:px-6 lg:px-8">
-                    {/* Dashboard Cards */}
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                        <div className="p-6 bg-white rounded-lg shadow">
-                            <h3 className="text-lg font-semibold text-gray-800">
-                                ჯამური ვაკანსიები
-                            </h3>
-                            <p className="mt-2 text-3xl font-bold text-blue-600">
-                                320
-                            </p>
-                        </div>
-                        <div className="p-6 bg-white rounded-lg shadow">
-                            <h3 className="text-lg font-semibold text-gray-800">
-                                ახალი ვაკანსიები
-                            </h3>
-                            <p className="mt-2 text-3xl font-bold text-green-600">
-                                24
-                            </p>
-                        </div>
-                        <div className="p-6 bg-white rounded-lg shadow">
-                            <h3 className="text-lg font-semibold text-gray-800">
-                                აქტიური მომხმარებლები
-                            </h3>
-                            <p className="mt-2 text-3xl font-bold text-yellow-600">
-                                1,560
-                            </p>
-                        </div>
-                        <div className="p-6 bg-white rounded-lg shadow">
-                            <h3 className="text-lg font-semibold text-gray-800">
-                                გადახდების ოდენობა
-                            </h3>
-                            <p className="mt-2 text-3xl font-bold text-red-600">
-                                $4,240
-                            </p>
-                        </div>
+                        <DashboardCard
+                            title="ჯამური ვაკანსიები"
+                            value={String(announcementsCount)}
+                            textColor="text-blue-600"
+                        />
+                        <DashboardCard
+                            title="ახალი ვაკანსიები"
+                            value={String(latestAnnouncementsCount)}
+                            textColor="text-green-600"
+                        />
+                        <DashboardCard
+                            title="აქტიური მომხმარებლები"
+                            value={String(activeUsers)}
+                            textColor="text-yellow-600"
+                        />
+                        <DashboardCard
+                            title="გადახდების ოდენობა"
+                            value={`$${String(transactionsCount)}`}
+                            textColor="text-red-600"
+                        />
                     </div>
 
-                    {/* Charts */}
                     <div className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2">
-                        <div className="p-6 bg-white shadow rounded-lg">
-                            <h3 className="mb-4 text-lg font-semibold text-gray-800">
-                                გადახდების სტატისტიკა
-                            </h3>
-                            <Bar data={barData} />
-                        </div>
-                        <div className="p-6 bg-white shadow rounded-lg">
-                            <h3 className="mb-4 text-lg font-semibold text-gray-800">
-                                ახალი ვაკანსიების ზრდა
-                            </h3>
-                            <Line data={lineData} />
-                        </div>
+                        <BarChart data={barData} />
+                        <LineChart data={lineData} />
                     </div>
 
-                    {/* Latest Vacancies */}
                     <div className="mt-8 bg-white shadow rounded-lg">
                         <div className="p-6">
                             <h3 className="text-lg font-semibold text-gray-800">
