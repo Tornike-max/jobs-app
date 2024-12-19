@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import { Bar, Line } from "react-chartjs-2";
 import {
     Chart as ChartJS,
@@ -15,8 +15,10 @@ import {
 import DashboardCard from "@/Components/DashboardCard";
 import BarChart from "@/Components/BarChart";
 import LineChart from "@/Components/LineChart";
-import { Announcement } from "@/types";
-import { useEffect, useState } from "react";
+import { Announcement, Company } from "@/types";
+
+import AnnouncementsTable from "@/Components/AnnouncementsTable";
+import CompaniesTable from "@/Components/CompaniesTable";
 
 ChartJS.register(
     CategoryScale,
@@ -36,6 +38,7 @@ const Index = ({
     transactionsCount,
     announcements,
     dateData,
+    companies,
 }: {
     announcementsCount: number;
     latestAnnouncementsCount: number;
@@ -43,6 +46,7 @@ const Index = ({
     transactionsCount: number;
     announcements: Announcement[];
     dateData: any;
+    companies: any;
 }) => {
     const labelsData = announcements.map((announcement) => announcement.title);
     const priceData = announcements.map((announcement) =>
@@ -116,54 +120,8 @@ const Index = ({
                         <LineChart data={lineData} />
                     </div>
 
-                    <div className="mt-8 bg-white shadow rounded-lg">
-                        <div className="p-6">
-                            <h3 className="text-lg font-semibold text-gray-800">
-                                უახლესი ვაკანსიები
-                            </h3>
-                            <table className="min-w-full mt-4 divide-y divide-gray-200">
-                                <thead>
-                                    <tr>
-                                        <th className="px-4 py-2 text-left text-sm font-semibold text-gray-600">
-                                            ვაკანსიის დასახელება
-                                        </th>
-                                        <th className="px-4 py-2 text-left text-sm font-semibold text-gray-600">
-                                            კატეგორია
-                                        </th>
-                                        <th className="px-4 py-2 text-left text-sm font-semibold text-gray-600">
-                                            დამატების დრო
-                                        </th>
-                                        <th className="px-4 py-2 text-right text-sm font-semibold text-gray-600">
-                                            მოქმედება
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-200">
-                                    {announcements.map((announcement) => (
-                                        <tr>
-                                            <td className="px-4 py-2 text-gray-800">
-                                                {announcement.title}
-                                            </td>
-                                            <td className="px-4 py-2 text-gray-600">
-                                                {announcement.category.name}
-                                            </td>
-                                            <td className="px-4 py-2 text-gray-600">
-                                                {announcement.created_at}
-                                            </td>
-                                            <td className="px-4 py-2 text-right">
-                                                <button className="text-blue-600 hover:underline mr-2">
-                                                    რედაქტირება
-                                                </button>
-                                                <button className="text-red-600 hover:underline">
-                                                    წაშლა
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    <AnnouncementsTable announcements={announcements} />
+                    <CompaniesTable companies={companies} />
                 </div>
             </div>
         </AuthenticatedLayout>

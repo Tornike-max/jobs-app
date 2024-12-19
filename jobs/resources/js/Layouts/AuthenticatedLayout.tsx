@@ -68,7 +68,10 @@ export default function Authenticated({
                         <div className="hidden sm:ms-6 sm:flex sm:items-center">
                             {user && user.status === "admin" && (
                                 <NavLink
-                                    active={route().current("admin.index")}
+                                    active={
+                                        route().current("admin.index") ||
+                                        window.location.href.includes("admin")
+                                    }
                                     href={route("admin.index")}
                                     className="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
                                 >
@@ -77,7 +80,10 @@ export default function Authenticated({
                             )}
                             {user && user.status === "editor" && (
                                 <NavLink
-                                    active={route().current("admin.index")}
+                                    active={
+                                        route().current("admin.index") ||
+                                        window.location.href.includes("admin")
+                                    }
                                     href={route("admin.index")}
                                     className="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
                                 >
