@@ -15,6 +15,8 @@ import {
 import DashboardCard from "@/Components/DashboardCard";
 import BarChart from "@/Components/BarChart";
 import LineChart from "@/Components/LineChart";
+import { Announcement } from "@/types";
+import { useEffect, useState } from "react";
 
 ChartJS.register(
     CategoryScale,
@@ -32,29 +34,40 @@ const Index = ({
     latestAnnouncementsCount,
     activeUsers,
     transactionsCount,
+    announcements,
+    dateData,
 }: {
     announcementsCount: number;
     latestAnnouncementsCount: number;
     activeUsers: number;
     transactionsCount: number;
+    announcements: Announcement[];
+    dateData: any;
 }) => {
+    const labelsData = announcements.map((announcement) => announcement.title);
+    const priceData = announcements.map((announcement) =>
+        announcement?.transaction?.amount
+            ? +announcement?.transaction?.amount
+            : 0
+    );
+
     const barData = {
-        labels: ["React დეველოპერი", "UI/UX დიზაინერი", "Laravel დეველოპერი"],
+        labels: labelsData,
         datasets: [
             {
                 label: "გადახდების ოდენობა ($)",
-                data: [50, 30, 70],
+                data: priceData,
                 backgroundColor: ["#4CAF50", "#2196F3", "#FF5722"],
             },
         ],
     };
 
     const lineData = {
-        labels: ["2024-05-28", "2024-05-30", "2024-06-01"],
+        labels: Object.keys(dateData),
         datasets: [
             {
                 label: "ახალი ვაკანსიები",
-                data: [5, 10, 24],
+                data: Object.values(dateData),
                 borderColor: "#42A5F5",
                 backgroundColor: "rgba(66, 165, 245, 0.2)",
                 pointBackgroundColor: "#42A5F5",
@@ -126,25 +139,27 @@ const Index = ({
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200">
-                                    <tr>
-                                        <td className="px-4 py-2 text-gray-800">
-                                            React დეველოპერი
-                                        </td>
-                                        <td className="px-4 py-2 text-gray-600">
-                                            პროგრამირება
-                                        </td>
-                                        <td className="px-4 py-2 text-gray-600">
-                                            5 წუთის წინ
-                                        </td>
-                                        <td className="px-4 py-2 text-right">
-                                            <button className="text-blue-600 hover:underline mr-2">
-                                                რედაქტირება
-                                            </button>
-                                            <button className="text-red-600 hover:underline">
-                                                წაშლა
-                                            </button>
-                                        </td>
-                                    </tr>
+                                    {announcements.map((announcement) => (
+                                        <tr>
+                                            <td className="px-4 py-2 text-gray-800">
+                                                {announcement.title}
+                                            </td>
+                                            <td className="px-4 py-2 text-gray-600">
+                                                {announcement.category.name}
+                                            </td>
+                                            <td className="px-4 py-2 text-gray-600">
+                                                {announcement.created_at}
+                                            </td>
+                                            <td className="px-4 py-2 text-right">
+                                                <button className="text-blue-600 hover:underline mr-2">
+                                                    რედაქტირება
+                                                </button>
+                                                <button className="text-red-600 hover:underline">
+                                                    წაშლა
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>

@@ -50,6 +50,16 @@ export interface Company {
     announcements: Announcement[];
 }
 
+export interface Transaction {
+    user: User;
+    announcement: Announcement;
+    transaction_id: string;
+    status: string;
+    amount: string;
+    currency: string;
+    phone: string;
+}
+
 export interface Announcement {
     id: number;
     author_id: number;
@@ -65,7 +75,9 @@ export interface Announcement {
     vacancy_type: string;
     created_at: string;
     updated_at: string;
+    category: Category;
     company: Company;
+    transaction: Transaction;
 }
 
 interface PricingOption {

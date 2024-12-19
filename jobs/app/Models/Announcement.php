@@ -42,4 +42,9 @@ class Announcement extends Model
     {
         return $this->belongsTo(Region::class);
     }
+
+    public function transaction()
+    {
+        return $this->hasOne(Transaction::class);
+    }
 }

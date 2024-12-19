@@ -5,7 +5,7 @@ const BarChart = ({ data }: { data: any }) => {
     return (
         <div className="p-6 bg-white shadow rounded-lg">
             <h3 className="mb-4 text-lg font-semibold text-gray-800">
-                გადახდების სტატისტიკა
+                უკანასკნელი 10 გადახდა
             </h3>
             <Bar data={data} />
         </div>

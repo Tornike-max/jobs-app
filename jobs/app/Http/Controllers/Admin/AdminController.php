@@ -17,10 +17,17 @@ class AdminController extends Controller
         $activeUsers = User::query()->get()->count();
         $transactions = Transaction::query()->latest()->get();
         $transactionsCount = 0;
+
+        $announcements = Announcement::query()->with(['author', 'transaction', 'category'])->latest()->take(10)->get();
+
+        $dateData = Announcement::selectRaw('DATE(created_at) as date, COUNT(*) as total')
+            ->groupBy('created_at')
+            ->pluck('total', 'date');
+
         foreach ($transactions as $transaction) {
             $transactionsCount += $transaction['amount'];
         }
 
-        return inertia('Admin/Index', compact(['announcementsCount', 'latestAnnouncementsCount', 'activeUsers', 'transactionsCount']));
+        return inertia('Admin/Index', compact(['announcementsCount', 'latestAnnouncementsCount', 'activeUsers', 'transactionsCount', 'announcements', 'dateData']));
     }
 }

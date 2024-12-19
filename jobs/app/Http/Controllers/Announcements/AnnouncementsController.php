@@ -174,7 +174,6 @@ class AnnouncementsController extends Controller
             throw new \InvalidArgumentException('The price must be a valid number.');
         }
 
-
         if ($logo) {
             $price = floatval($price + 10);
 
