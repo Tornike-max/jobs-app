@@ -15,10 +15,11 @@ import {
 import DashboardCard from "@/Components/DashboardCard";
 import BarChart from "@/Components/BarChart";
 import LineChart from "@/Components/LineChart";
-import { Announcement, Company } from "@/types";
+import { Announcement, Category, Company } from "@/types";
 
 import AnnouncementsTable from "@/Components/AnnouncementsTable";
 import CompaniesTable from "@/Components/CompaniesTable";
+import CategoriesTable from "@/Components/CategoriesTable";
 
 ChartJS.register(
     CategoryScale,
@@ -39,6 +40,7 @@ const Index = ({
     announcements,
     dateData,
     companies,
+    categories,
 }: {
     announcementsCount: number;
     latestAnnouncementsCount: number;
@@ -47,6 +49,7 @@ const Index = ({
     announcements: Announcement[];
     dateData: any;
     companies: any;
+    categories: Category[];
 }) => {
     const labelsData = announcements.map((announcement) => announcement.title);
     const priceData = announcements.map((announcement) =>
@@ -122,6 +125,7 @@ const Index = ({
 
                     <AnnouncementsTable announcements={announcements} />
                     <CompaniesTable companies={companies} />
+                    <CategoriesTable categories={categories} />
                 </div>
             </div>
         </AuthenticatedLayout>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Announcement;
+use App\Models\Category;
 use App\Models\Company;
 use App\Models\Transaction;
 use App\Models\User;
@@ -18,7 +19,9 @@ class AdminController extends Controller
         $latestAnnouncementsCount = Announcement::query()->latest()->take(5)->get()->count();
         $activeUsers = User::query()->get()->count();
         $transactions = Transaction::query()->latest()->get();
+        $categories = Category::query()->orderBy('name', 'desc')->get();
         $transactionsCount = 0;
+
 
         $announcements = Announcement::query()->with(['author', 'transaction', 'category'])->latest()->take(10)->get();
 
@@ -32,7 +35,7 @@ class AdminController extends Controller
             $transactionsCount += $transaction['amount'];
         }
 
-        return inertia('Admin/Index', compact(['announcementsCount', 'latestAnnouncementsCount', 'activeUsers', 'transactionsCount', 'announcements', 'dateData', 'companies']));
+        return inertia('Admin/Index', compact(['announcementsCount', 'latestAnnouncementsCount', 'activeUsers', 'transactionsCount', 'announcements', 'dateData', 'companies', 'categories']));
     }
 
     public function editAnnouncement(Announcement $announcement)
@@ -90,5 +93,30 @@ class AdminController extends Controller
         $company->update($validatedData);
 
         return to_route('admin.index')->with('success', 'Company updated successfully.');
+    }
+
+    public function deleteCompany(Company $company)
+    {
+        $company->delete();
+        return to_route('admin.index');
+    }
+
+    //categories
+    public function updateCategory(Request $request, Category $category)
+    {
+        $validatedData = $request->validate([
+            'name' => 'nullable|string',
+        ]);
+
+        if (!$validatedData['name']) return;
+
+        $category->update($validatedData);
+        return to_route('admin.index');
+    }
+
+    public function deleteCategory(Category $category)
+    {
+        $category->delete();
+        return to_route('admin.index');
     }
 }

@@ -32,14 +32,14 @@ const AnnouncementsTable = ({
                             <th className="px-4 py-2 text-left text-sm font-semibold text-gray-600">
                                 დამატების დრო
                             </th>
-                            <th className="px-4 py-2 text-right text-sm font-semibold text-gray-600">
+                            <th className="px-4 py-2 text-center text-sm font-semibold text-gray-600">
                                 მოქმედება
                             </th>
                         </tr>
                     </thead>
                     <tbody className="divide-y space-y-2 divide-gray-200">
                         {announcements.map((announcement) => (
-                            <tr>
+                            <tr key={announcement.id}>
                                 <td className="px-4 py-2 text-gray-800">
                                     {announcement.title}
                                 </td>

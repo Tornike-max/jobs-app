@@ -15,3 +15,9 @@ Route::delete('/admin/announcements/delete/{announcement}', [AdminController::cl
 //companies
 Route::get('/admin/companies/{company}/edit', [AdminController::class, 'editCompany'])->name('admin.company.edit');
 Route::put('/admin/companies/update/{company}', [AdminController::class, 'updateCompany'])->name('admin.company.update');
+Route::delete('/admin/companies/delete/{company}', [AdminController::class, 'deleteCompany'])->name('admin.company.delete');
+
+
+//categories
+Route::put('/admin/categories/update/{category}', [AdminController::class, 'updateCategory'])->name('admin.category.update');
+Route::delete('/admin/categories/delete/{category}', [AdminController::class, 'deleteCategory'])->name('admin.category.delete');

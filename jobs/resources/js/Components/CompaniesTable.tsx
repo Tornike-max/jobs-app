@@ -1,9 +1,13 @@
 import { formatDate } from "@/helpers/helpers";
 import { Company } from "@/types";
-import { Link } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import { FaArrowLeft, FaArrowRight, FaPen, FaTrash } from "react-icons/fa";
 
 const CompaniesTable = ({ companies }: { companies: any }) => {
+    const { delete: destroy, processing } = useForm();
+    const handleDelete = (id: number) => {
+        destroy(route("admin.company.delete", id));
+    };
     return (
         <div className="mt-8 bg-white shadow rounded-lg">
             <div className="p-6">
@@ -22,7 +26,7 @@ const CompaniesTable = ({ companies }: { companies: any }) => {
                             <th className="px-4 py-2 text-left text-sm font-semibold text-gray-600">
                                 დამატების დრო
                             </th>
-                            <th className="px-4 py-2 text-right text-sm font-semibold text-gray-600">
+                            <th className="px-4 py-2 text-center text-sm font-semibold text-gray-600">
                                 მოქმედება
                             </th>
                         </tr>
@@ -39,7 +43,7 @@ const CompaniesTable = ({ companies }: { companies: any }) => {
                                 <td className="px-4 py-2 text-gray-600">
                                     {formatDate(company.created_at)}
                                 </td>
-                                <td className="px-4 py-2 text-right flex items-center justify-end gap-2">
+                                <td className="px-4 py-2  flex items-center justify-center gap-2">
                                     <Link
                                         href={route(
                                             "admin.company.edit",
@@ -49,7 +53,11 @@ const CompaniesTable = ({ companies }: { companies: any }) => {
                                     >
                                         <FaPen />
                                     </Link>
-                                    <button className="text-red-600 hover:underline">
+                                    <button
+                                        disabled={processing}
+                                        onClick={() => handleDelete(company.id)}
+                                        className="text-red-600 hover:underline"
+                                    >
                                         <FaTrash />
                                     </button>
                                 </td>
