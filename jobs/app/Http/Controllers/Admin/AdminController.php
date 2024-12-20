@@ -119,4 +119,37 @@ class AdminController extends Controller
         $category->delete();
         return to_route('admin.index');
     }
+
+    //users
+    public function indexUsers()
+    {
+        $users = User::query()->latest()->paginate(10);
+
+        return inertia('Admin/Users/Index', compact('users'));
+    }
+
+    public function editUser(User $user)
+    {
+        return inertia('Admin/Users/Edit', compact('user'));
+    }
+
+    public function updateUser(Request $request, User $user)
+    {
+
+        $validatedData = $request->validate([
+            'name' => 'nullable',
+            'email' => 'nullable',
+            'status' => 'nullable',
+        ]);
+
+        $user->update($validatedData);
+
+        return to_route('admin.users.index');
+    }
+
+    public function deleteUser(User $user)
+    {
+        $user->delete();
+        return to_route('admin.users.index');
+    }
 }

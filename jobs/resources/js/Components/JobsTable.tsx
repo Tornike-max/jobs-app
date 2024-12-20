@@ -78,7 +78,7 @@ const JobsTable = ({ jobs, user }: { jobs: any; user: User }) => {
                                               </Link>
                                           </td>
                                           <td className="px-6 py-4 border-t">
-                                              {job.company.logo ? (
+                                              {job?.company?.logo ? (
                                                   <div className="flex items-center gap-2">
                                                       <img
                                                           className="w-14"

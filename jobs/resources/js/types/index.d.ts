@@ -4,6 +4,7 @@ export interface User {
     email: string;
     status: "admin" | "editor" | "user";
     email_verified_at?: string;
+    created_at: string;
 }
 
 export interface City {
