@@ -104,8 +104,11 @@ const Index = ({
                         >
                             მომხმარებლები
                         </NavLink>
-                        <NavLink active={false} href="">
-                            პარამეტრები
+                        <NavLink
+                            active={route().current("admin.services.index")}
+                            href={route("admin.services.index")}
+                        >
+                            სერვისები
                         </NavLink>
                     </div>
                 </div>

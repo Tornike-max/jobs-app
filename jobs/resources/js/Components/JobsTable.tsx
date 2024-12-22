@@ -84,29 +84,29 @@ const JobsTable = ({ jobs, user }: { jobs: any; user: User }) => {
                                                           className="w-14"
                                                           alt="title"
                                                           src={showImage(
-                                                              job.company.logo
+                                                              job?.company?.logo
                                                           )}
                                                       />
                                                       <Link
                                                           href={route(
                                                               "currentCompany.show",
-                                                              job.company.id
+                                                              job?.company?.id
                                                           )}
                                                       >
-                                                          {job.company.name}
+                                                          {job?.company?.name}
                                                       </Link>
                                                   </div>
                                               ) : (
                                                   <Link href="#">
-                                                      {job.company.name}
+                                                      {job?.company?.name}
                                                   </Link>
                                               )}
                                           </td>
                                           <td className="px-6 py-4 border-t">
-                                              {formatDate(job.created_at)}
+                                              {formatDate(job?.created_at)}
                                           </td>
                                           <td className="px-6 py-4 border-t">
-                                              {formatDate(job.end_date)}
+                                              {formatDate(job?.end_date)}
                                           </td>
                                       </tr>
                                   )
@@ -128,7 +128,7 @@ const JobsTable = ({ jobs, user }: { jobs: any; user: User }) => {
                                       end_date: string;
                                   }) => (
                                       <tr
-                                          key={job.id}
+                                          key={job?.id}
                                           className="text-blue-500 hover:bg-gray-50"
                                       >
                                           <td className="px-6 py-4 border-t hover:">
@@ -144,27 +144,27 @@ const JobsTable = ({ jobs, user }: { jobs: any; user: User }) => {
                                               <Link
                                                   href={route(
                                                       "announcements.show",
-                                                      job.id
+                                                      job?.id
                                                   )}
                                               >
-                                                  {job.title}
+                                                  {job?.title}
                                               </Link>
                                           </td>
                                           <td className="px-6 py-4 border-t">
                                               <Link
                                                   href={route(
                                                       "currentCompany.show",
-                                                      job.company_id
+                                                      job?.company_id
                                                   )}
                                               >
-                                                  {job.title}
+                                                  {job?.title}
                                               </Link>
                                           </td>
                                           <td className="px-6 py-4 border-t">
-                                              {formatDate(job.created_at)}
+                                              {formatDate(job?.created_at)}
                                           </td>
                                           <td className="px-6 py-4 border-t">
-                                              {formatDate(job.end_date)}
+                                              {formatDate(job?.end_date)}
                                           </td>
                                       </tr>
                                   )

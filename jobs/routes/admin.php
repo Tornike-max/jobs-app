@@ -27,3 +27,9 @@ Route::get('/admin/users', [AdminController::class, 'indexUsers'])->name('admin.
 Route::get('/admin/users/{user}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
 Route::put('/admin/users/update/{user}', [AdminController::class, 'updateUser'])->name('admin.users.update');
 Route::delete('/admin/users/delete/{user}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
+
+
+//parameters - others
+Route::get('/admin/services', [AdminController::class, 'indexServices'])->name('admin.services.index');
+Route::get('/admin/services/{service}/edit', [AdminController::class, 'editService'])->name('admin.services.edit');
+Route::put('/admin/services/edit/{service}', [AdminController::class, 'updateService'])->name('admin.services.update');

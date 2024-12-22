@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Announcement;
 use App\Models\Category;
 use App\Models\Company;
+use App\Models\PricingOption;
+use App\Models\PricingPlan;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -151,5 +153,52 @@ class AdminController extends Controller
     {
         $user->delete();
         return to_route('admin.users.index');
+    }
+
+    //parameters
+    public function indexServices()
+    {
+        $services = PricingOption::query()->with('plan')->get();
+        return inertia('Admin/Services/Index', compact('services'));
+    }
+
+    public function editService(PricingOption $service)
+    {
+        $servicePlan = PricingOption::query()->with('plan')->where('id', '=', $service['id'])->first();
+
+
+        return inertia('Admin/Services/Edit', ['service' => $servicePlan]);
+    }
+
+    public function updateService(Request $request, PricingOption $service)
+    {
+        $validatedData = $request->validate([
+            'name' => 'nullable|string',
+            'description' => 'nullable|string',
+            'max_vacancies' => 'nullable|string',
+            'price' => 'nullable|string',
+            'base_duration_days' => 'nullable|string'
+        ]);
+
+        $pricingOption = [
+            'price' => $validatedData['price'],
+            'max_vacancies' => $validatedData['max_vacancies']
+        ];
+
+        $pricingPlans = [
+            'description' => $validatedData['description'],
+            'base_duration_days' => $validatedData['base_duration_days'],
+            'name' => $validatedData['name']
+        ];
+
+        $serviceToUpdate = PricingOption::query()->with('plan')->where('id', '=', $service['id'])->first();
+
+        if ($serviceToUpdate) {
+            $serviceToUpdate->update($pricingOption);
+            if ($serviceToUpdate->plan) {
+                $serviceToUpdate->plan->update($pricingPlans);
+            }
+        }
+        return to_route('admin.services.index');
     }
 }

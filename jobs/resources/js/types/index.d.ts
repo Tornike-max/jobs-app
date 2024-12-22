@@ -135,6 +135,7 @@ export type PageProps<
     company: Company;
     pricing: PricingPlan[];
     categories: Category[];
+    services: PricingOption[];
     forWhat: string;
     faqs: Faqs[];
     abouts: Abouts[];

@@ -1,9 +1,13 @@
+import InputLabel from "@/Components/InputLabel";
 import NavLink from "@/Components/NavLink";
-import UsersTable from "@/Components/UsersTable";
+import ServicesTable from "@/Components/ServicesTable";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { PageProps } from "@/types";
 import { Head } from "@inertiajs/react";
+import React from "react";
 
-const Index = ({ users }: { users: any }) => {
+const Index = ({ auth, services }: PageProps) => {
+    console.log(services);
     return (
         <AuthenticatedLayout
             header={
@@ -38,7 +42,7 @@ const Index = ({ users }: { users: any }) => {
 
             <div className="py-12">
                 <div className="mx-auto w-full sm:px-6 lg:px-8">
-                    <UsersTable users={users} />
+                    <ServicesTable services={services} />
                 </div>
             </div>
         </AuthenticatedLayout>
