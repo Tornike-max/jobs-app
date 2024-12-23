@@ -1,10 +1,8 @@
-import InputLabel from "@/Components/InputLabel";
 import NavLink from "@/Components/NavLink";
 import ServicesTable from "@/Components/ServicesTable";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
 import { Head } from "@inertiajs/react";
-import React from "react";
 
 const Index = ({ auth, services }: PageProps) => {
     return (

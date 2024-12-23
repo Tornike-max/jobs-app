@@ -2,7 +2,7 @@ import ApplicationLogo from "@/Components/ApplicationLogo";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Category, City, PricingOption, PricingPlan } from "@/types";
+import { Category, City, Company, PricingOption, PricingPlan } from "@/types";
 import { Head, useForm } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
@@ -12,10 +12,12 @@ const Create = ({
     pricing,
     categories,
     cities,
+    companies,
 }: {
     pricing: PricingOption[];
     categories: Category[];
     cities: City[];
+    companies: Company[];
 }) => {
     const { post, processing, data, setData, errors, reset } = useForm({
         identicalCode: "",
@@ -33,6 +35,7 @@ const Create = ({
         product: "",
         file: null,
         logo: null,
+        company_id: "",
     });
     const [price, setPrice] = useState(0);
     useEffect(() => {
@@ -44,13 +47,13 @@ const Create = ({
         }
     }, [data.product, data.logo]);
 
-    console.log(cities);
-
     const handleSubmit = async (e: { preventDefault: () => void }) => {
         e.preventDefault();
 
         post(route("announcements.store"));
     };
+
+    console.log(companies);
 
     return (
         <div className="max-w-8xl w-full flex justify-center items-center py-12">
@@ -152,6 +155,28 @@ const Create = ({
                             {errors.announcementName && (
                                 <span className="text-red-500 text-sm">
                                     {errors.announcementName}
+                                </span>
+                            )}
+                        </div>
+                        <div className="w-full flex justify-center items-start flex-col gap-1">
+                            <InputLabel>თქვენი კომპანიები</InputLabel>
+                            <select
+                                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 "
+                                value={data.company_id}
+                                onChange={(e) =>
+                                    setData("company_id", e.target.value)
+                                }
+                            >
+                                <option value={""}>გაუქმება</option>
+                                {companies.map((company: Company) => (
+                                    <option key={company.id} value={company.id}>
+                                        {company.name}
+                                    </option>
+                                ))}
+                            </select>
+                            {errors.company_id && (
+                                <span className="text-red-500 text-sm">
+                                    {errors.company_id}
                                 </span>
                             )}
                         </div>

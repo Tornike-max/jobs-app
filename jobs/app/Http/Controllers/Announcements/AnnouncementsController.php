@@ -61,13 +61,14 @@ class AnnouncementsController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(string $id)
     {
         $pricing = PricingOption::query()->with('plan')->orderBy('id', 'asc')->get();
         $categories = Category::query()->orderBy('id', 'asc')->get();
         $cities = City::query()->with('region')->orderBy('name', 'desc')->get();
+        $companies = Company::query()->where('user_id', '=', $id)->latest()->get();
 
-        return inertia('Announcements/Create', compact(['pricing', 'categories', 'cities']));
+        return inertia('Announcements/Create', compact(['pricing', 'categories', 'cities', 'companies']));
     }
 
     public function store(Request $request)
@@ -87,6 +88,7 @@ class AnnouncementsController extends Controller
             'comment' => 'nullable|string',
             'description' => 'required|string',
             'city_id' => 'required',
+            'company_id' => 'required|exists:companies,id',
             'product' => 'required|string',
             'file' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -119,7 +121,7 @@ class AnnouncementsController extends Controller
             'vacancy_type' => $validatedData['vacancy_type'],
             'category_id' => $validatedData['category_id'],
             'author_id' => Auth::user()->id,
-            'company_id' => Auth::user()->companies[0]->id,
+            'company_id' => $validatedData['company_id'],
             'region_id' => $region_id
         ];
 

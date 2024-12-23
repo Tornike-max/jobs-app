@@ -44,7 +44,7 @@ const Index = ({ auth, pricing, forWhat }: PageProps) => {
                         {forWhat === "pricing" && (
                             <PricingComponent pricing={pricing} />
                         )}
-                        {forWhat === "publish" && <Publish />}
+                        {forWhat === "publish" && <Publish user={auth.user} />}
                         {forWhat === "us" && <WhyUs />}
                     </div>
                 </div>

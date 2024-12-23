@@ -1,7 +1,8 @@
+import { User } from "@/types";
 import { Link } from "@inertiajs/react";
 import React from "react";
 
-const Publish = () => {
+const Publish = ({ user }: { user: User }) => {
     return (
         <div className="w-full flex justify-center items-start flex-col gap-8">
             <div className="w-full flex justify-start items-center">
@@ -15,7 +16,7 @@ const Publish = () => {
                     აქ:{" "}
                     <Link
                         className="text-blue-500 underline"
-                        href={route("announcements.create")}
+                        href={route("announcements.create", user.id)}
                     >
                         Link
                     </Link>{" "}
