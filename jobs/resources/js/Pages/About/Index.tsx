@@ -1,6 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
 import { Head } from "@inertiajs/react";
+import React from "react";
 
 const Index = ({ auth, abouts }: PageProps) => {
     return (
@@ -17,15 +18,18 @@ const Index = ({ auth, abouts }: PageProps) => {
                 <div className="mx-auto w-full sm:px-6 lg:px-8">
                     <div className="w-full flex justify-center items-start flex-col gap-8">
                         {abouts.map((about) => (
-                            <>
+                            <React.Fragment key={about.id}>
                                 <p>{about.headerText}</p>
                                 <p>{about.middleText}</p>
                                 <p>{about.footerText}</p>
-                            </>
+                            </React.Fragment>
                         ))}
                         <div className="w-full flex justify-center items-start flex-col gap-2">
                             {abouts.map((founder) => (
-                                <div className="w-full flex justify-center items-start flex-col">
+                                <div
+                                    key={founder.id}
+                                    className="w-full flex justify-center items-start flex-col"
+                                >
                                     <p>დამფუძნებელი: {founder.founder}</p>
                                     <p>
                                         თანა დამფუძნებელი: {founder.co_founder}

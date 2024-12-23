@@ -117,6 +117,7 @@ export interface Faqs {
 }
 
 export interface Abouts {
+    id: number;
     headerText: string;
     middleText: string;
     footerText: string;

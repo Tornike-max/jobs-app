@@ -1,12 +1,9 @@
 import NavLink from "@/Components/NavLink";
 import RegionsCitiesTable from "@/Components/RegionsCitiesTable";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { City } from "@/types";
 import { Head } from "@inertiajs/react";
-import React from "react";
 
 const Index = ({ cities }: { cities: any[] }) => {
-    console.log(cities);
     return (
         <AuthenticatedLayout
             header={

@@ -36,7 +36,7 @@ const CategoriesTable = ({ categories }: { categories: Category[] }) => {
         <div className="mt-8 bg-white shadow rounded-lg overflow-hidden">
             <div className="p-6">
                 <h3 className="text-lg font-semibold text-gray-800">
-                    კომპანიების სია
+                    კატეგორიების სია
                 </h3>
                 <table className="min-w-full mt-4 divide-y divide-gray-200">
                     <thead>

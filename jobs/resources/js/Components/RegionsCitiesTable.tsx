@@ -7,7 +7,7 @@ const RegionsCitiesTable = ({ cities }: { cities: any }) => {
     const { delete: destroy, processing } = useForm();
     const handleDelete = (e: FormEvent<HTMLFormElement>, id: number) => {
         e.preventDefault();
-        // destroy(route("admin.users.delete", id));
+        destroy(route("admin.regions-cities.delete", id));
     };
     return (
         <div className="mt-8 bg-white shadow rounded-lg">
@@ -48,7 +48,10 @@ const RegionsCitiesTable = ({ cities }: { cities: any }) => {
                                 <td className="px-4 py-2 ">
                                     <div className="flex items-center justify-center gap-1">
                                         <Link
-                                            href={""}
+                                            href={route(
+                                                "admin.regions-cities.edit",
+                                                city.id
+                                            )}
                                             className="text-blue-600 hover:underline mr-2"
                                         >
                                             <FaPen />

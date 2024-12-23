@@ -9,6 +9,7 @@ use App\Models\City;
 use App\Models\Company;
 use App\Models\PricingOption;
 use App\Models\PricingPlan;
+use App\Models\Region;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -209,5 +210,32 @@ class AdminController extends Controller
     {
         $cities = City::query()->with('region')->paginate(15);
         return inertia('Admin/RegionsCities/Index', compact('cities'));
+    }
+
+    public function editRegionCity(City $city)
+    {
+        $city->load('region');
+        $cities = City::query()->get();
+        $regions = Region::query()->get();
+        return inertia('Admin/RegionsCities/Edit', compact(['city', 'cities', 'regions']));
+    }
+
+
+    public function updateRegionCity(Request $request, City $city)
+    {
+        $validatedData = $request->validate([
+            'name' => 'nullable|string',
+            'region_id' => 'nullable|integer',
+        ]);
+
+        $city->update($validatedData);
+
+        return to_route('admin.regions-cities.index');
+    }
+
+    public function deleteRegionCity(City $city)
+    {
+        $city->delete();
+        return to_route('admin.regions-cities.index');
     }
 }

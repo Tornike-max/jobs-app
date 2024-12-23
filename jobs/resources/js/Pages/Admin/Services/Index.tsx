@@ -7,7 +7,6 @@ import { Head } from "@inertiajs/react";
 import React from "react";
 
 const Index = ({ auth, services }: PageProps) => {
-    console.log(services);
     return (
         <AuthenticatedLayout
             header={

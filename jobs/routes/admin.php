@@ -36,3 +36,6 @@ Route::put('/admin/services/edit/{service}', [AdminController::class, 'updateSer
 
 //regions - cities
 Route::get('/admin/regions-cities', [AdminController::class, 'indexRegionsCities'])->name('admin.regions-cities.index');
+Route::get('/admin/regions-cities/{city}/edit', [AdminController::class, 'editRegionCity'])->name('admin.regions-cities.edit');
+Route::put('/admin/regions-cities/update/{city}', [AdminController::class, 'updateRegionCity'])->name('admin.regions-cities.update');
+Route::delete('/admin/regions-cities/delete/{city}', [AdminController::class, 'deleteRegionCity'])->name('admin.regions-cities.delete');
