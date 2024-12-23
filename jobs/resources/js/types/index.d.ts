@@ -11,6 +11,7 @@ export interface City {
     id: number;
     name: string;
     region_id: number;
+    region: Region;
     created_at: string;
     updated_at: string;
 }

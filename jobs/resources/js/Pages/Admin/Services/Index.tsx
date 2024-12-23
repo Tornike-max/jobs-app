@@ -34,6 +34,14 @@ const Index = ({ auth, services }: PageProps) => {
                         >
                             სერვისები
                         </NavLink>
+                        <NavLink
+                            active={route().current(
+                                "admin.regions-cities.index"
+                            )}
+                            href={route("admin.regions-cities.index")}
+                        >
+                            რეგიონები და ქალაქები
+                        </NavLink>
                     </div>
                 </div>
             }

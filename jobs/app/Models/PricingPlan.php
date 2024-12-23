@@ -10,6 +10,13 @@ class PricingPlan extends Model
 {
     use HasFactory, Notifiable;
 
+    protected $fillable = [
+        'name',
+        'description',
+        'base_duration_days',
+        'is_vip',
+    ];
+
     public function options()
     {
         return $this->hasMany(PricingOption::class);

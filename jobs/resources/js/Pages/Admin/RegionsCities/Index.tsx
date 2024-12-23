@@ -1,9 +1,12 @@
 import NavLink from "@/Components/NavLink";
-import UsersTable from "@/Components/UsersTable";
+import RegionsCitiesTable from "@/Components/RegionsCitiesTable";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { City } from "@/types";
 import { Head } from "@inertiajs/react";
+import React from "react";
 
-const Index = ({ users }: { users: any }) => {
+const Index = ({ cities }: { cities: any[] }) => {
+    console.log(cities);
     return (
         <AuthenticatedLayout
             header={
@@ -46,7 +49,7 @@ const Index = ({ users }: { users: any }) => {
 
             <div className="py-12">
                 <div className="mx-auto w-full sm:px-6 lg:px-8">
-                    <UsersTable users={users} />
+                    <RegionsCitiesTable cities={cities} />
                 </div>
             </div>
         </AuthenticatedLayout>

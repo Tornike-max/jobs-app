@@ -22,31 +22,9 @@ const Edit = ({ service }: { service: PricingOption }) => {
     return (
         <AuthenticatedLayout
             header={
-                <div className="w-full flex justify-center items-start flex-col gap-4">
-                    <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                        ადმინ პანელი - {service?.plan?.name}
-                    </h2>
-                    <div className="w-full flex justify-start items-center gap-4 h-10">
-                        <NavLink
-                            active={route().current("admin.index")}
-                            href={route("admin.index")}
-                        >
-                            მთავარი
-                        </NavLink>
-                        <NavLink
-                            active={route().current("admin.users.index")}
-                            href={route("admin.users.index")}
-                        >
-                            მომხმარებლები
-                        </NavLink>
-                        <NavLink
-                            active={route().current("admin.services.index")}
-                            href={route("admin.services.index")}
-                        >
-                            სერვისები
-                        </NavLink>
-                    </div>
-                </div>
+                <h2 className="text-xl font-semibold leading-tight text-gray-800">
+                    ადმინ პანელი - {service?.plan?.name}
+                </h2>
             }
         >
             <Head title={`ადმინ პანელი - ${service?.plan?.name}`} />

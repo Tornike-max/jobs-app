@@ -33,3 +33,6 @@ Route::delete('/admin/users/delete/{user}', [AdminController::class, 'deleteUser
 Route::get('/admin/services', [AdminController::class, 'indexServices'])->name('admin.services.index');
 Route::get('/admin/services/{service}/edit', [AdminController::class, 'editService'])->name('admin.services.edit');
 Route::put('/admin/services/edit/{service}', [AdminController::class, 'updateService'])->name('admin.services.update');
+
+//regions - cities
+Route::get('/admin/regions-cities', [AdminController::class, 'indexRegionsCities'])->name('admin.regions-cities.index');

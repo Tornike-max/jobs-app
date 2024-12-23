@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Announcement;
 use App\Models\Category;
+use App\Models\City;
 use App\Models\Company;
 use App\Models\PricingOption;
 use App\Models\PricingPlan;
@@ -200,5 +201,13 @@ class AdminController extends Controller
             }
         }
         return to_route('admin.services.index');
+    }
+
+    //regions - cities
+
+    public function indexRegionsCities()
+    {
+        $cities = City::query()->with('region')->paginate(15);
+        return inertia('Admin/RegionsCities/Index', compact('cities'));
     }
 }
